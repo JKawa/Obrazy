@@ -74,8 +74,6 @@ def Roznica(image_1, image_2):
 def fill_picture(base_image, new_image):
     width_b, height_b = base_image.size
     width_n, height_n = new_image.size
-    print(f"width b {width_b}, hight b {height_b}")
-    print(f"width n {width_n}, hight n {height_n}")
     image_0 = create_image(width_b, height_b,'black')
     pixels_0 = image_0.load()
     for i in range(width_n):
@@ -101,7 +99,6 @@ def roznica_obraz(image_begin, image_end, step):
     (width, height) = image_begin.size
     image_rozn = create_image(width, height, "black")
     pixels_rozn = image_rozn.load()
-    print(pixels_rozn)
     for i in range(width):
         for j in range(height):
             pixel_begin = get_pixel(image_begin, i, j)
@@ -122,10 +119,8 @@ def zapis_giff(folder,wynik):
     for file in Path(folder).iterdir():
         head_tail = os.path.split(file)
         t=head_tail[1]
-        print(t)
         r=t[7:].split(".")
         p=int(r[0])
-        print(p)
 
         if not file.is_file():
             continue
@@ -155,7 +150,6 @@ def pictures_to_giff():
 
     roznica = Roznica(image_1, image_2)
     width_R, height_R = roznica.size
-    print(f"width R {width_R}, height R:{height_R}")
     width_1, height_1 = image_1.size
     width_2, height_2 = image_2.size
     image_b = fill_picture(roznica, image_1)
@@ -164,7 +158,6 @@ def pictures_to_giff():
     krok = 1
     while krok <= (step+1):
 
-        print("krok: " ,krok)
         image_p=image_b
         image_p.save(folder+"/obrazek" + str(krok) + '.jpg', 'JPEG')
         pixels_p = image_p.load()
