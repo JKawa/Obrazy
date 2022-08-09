@@ -1,4 +1,5 @@
 from PIL import Image
+from tkinter import filedialog, Tk
 
 
 def difference(value1, value2):
@@ -39,13 +40,21 @@ def get_pixel(image, x, y):
 
 
 
-def Roznica(image_1, image_2):
-    """
-    Returns difference between two images
-    :param image_1: base picture
-    :param image_2:a subtracted picture
-    :return: result of difference
-    """
+def Roznica():
+    root = Tk()
+    root.withdraw()
+    base1 = filedialog.askopenfilename(parent=root,initialdir="\\",
+                                       title="Wybierz pierwszy obraz",
+                                       filetypes=(("Image files", "*.jpg*"), ("all files", "*.*")))
+    base1.replace('\\', '/')
+    print(base1)
+    image_1 = Image.open(base1)
+    base2 = filedialog.askopenfilename(initialdir="\\",
+                                       title="Wybierz drugi obraz",
+                                       filetypes=(("Image files", "*.jpg*"), ("all files", "*.*")))
+    base2.replace('\\', '/')
+    image_2 = Image.open(base2)
+
     width1, height1 = image_1.size
     width2, height2 = image_2.size
 
@@ -86,3 +95,6 @@ def Roznica(image_1, image_2):
 
     return new_image
 
+
+image3=Roznica()
+image3.show()
