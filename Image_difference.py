@@ -37,9 +37,6 @@ def get_pixel(image, x, y):
     pixel = image.getpixel((x, y))
     return pixel
 
-
-
-
 def Roznica():
     root = Tk()
     root.withdraw()
