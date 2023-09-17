@@ -1,16 +1,41 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import streamlit as st
+from src.class_images import class_image
+import pathlib
+import os
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def choose_image():
+    for _, _, filenames in os.walk("images"):
+        images_list=[f.split(".")[0] for f in filenames]
+            
+    choice=st.selectbox("Choose image to print",options=images_list)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    return choice
+
+
+
+def run():
+    st.title("Images")
+    st.header("Show images")
+    
+    ch_im=choose_image()
+
+    c=class_image(ch_im)
+    
+    st.image(c.image)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if __name__ == "__main__":
+    run()
