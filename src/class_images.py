@@ -8,7 +8,7 @@ class class_image():
         self.width=self.image.shape[1]
         
         
-    def load_image(self,name, path="images"):
+    def load_image(self,name, path="Obrazy/images"):
         im = cv.imread(f'{path}/{name}.jpeg')
         return im
     def show_image(self):
@@ -47,10 +47,9 @@ class class_image():
             return str(faces.shape[0])
         
         
-        
-c=class_image("kot")
-print(type(c.image))
-print(c.height)
-print(c.width)
+    def image_crop(self,start_row, end_row, start_col, end_col):
+        cropped = self.image[start_row:end_row, start_col:end_col]
+        return cropped
+
 
         
