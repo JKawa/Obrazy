@@ -1,17 +1,17 @@
 import streamlit as st
-from src.class_images import class_image
+from src.class_images import class_image, images_list
 import pathlib
+import imageio
+import imageio.v3
 import os
+from PIL import Image
+from pathlib import Path
 
 
-def choose_image():
-    for _, _, filenames in os.walk("images"):
-        images_list=[f.split(".")[0] for f in filenames]
-            
-    choice=st.selectbox("Choose image to print",options=images_list)
+def choose_image(text="Choose image",k="basic"):
+    choice=st.selectbox(text,options=images_list("images"), key=k)
 
     return choice
-
 
 
 def run():
@@ -19,10 +19,10 @@ def run():
     st.header("Show images")
     
     ch_im=choose_image()
+    print("--------------------------------------------",ch_im)
 
-    c=class_image(ch_im)
-    
-    st.image(c.image)
+
+    st.image(f"images/{ch_im}.jpeg", use_column_width=True)
 
 
 

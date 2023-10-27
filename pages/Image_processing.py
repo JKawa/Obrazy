@@ -1,4 +1,4 @@
-
+import os
 
 import streamlit as st
 from main import choose_image
@@ -8,7 +8,12 @@ ch_im=choose_image()
 
 c=class_image(ch_im)
 
-shown_im=c.image
+
+def delete_files_from_dir(dir):
+    for filename in os.listdir(dir):
+        if os.path.isfile(os.path.join(f'{dir}/', filename)):
+            os.remove(os.path.join(f'{dir}/', filename))
+    return dir
 
 st.sidebar.header("Choose process")
 
@@ -35,9 +40,28 @@ if grey_button:
     shown_im=c.grey()
 st.sidebar.markdown("---------------------------")
 
+st.image(f"images/{ch_im}.jpeg", use_column_width=True)
+
+st.sidebar.subheader("Crop")
 
 
+n=st.sidebar.number_input("Choose number of elements",min_value=0)
+crop_button=st.sidebar.button("Crop")
+if crop_button:
+    delete_files_from_dir('saved_patches')
 
+    fields=c.crop_n_parts(n)
+
+    for idx in range(0, len(fields), n):
+        cols = st.columns(n)
+
+        for i in range(n):
+            if idx + i < len(fields):
+                image_name = fields[idx + i]
+                image_path = os.path.join('saved_patches/', image_name + ".jpg")
+                cols[i].image(image_path, use_column_width=True)
+
+st.sidebar.markdown("---------------------------")
 
     
-st.image(shown_im)
+
