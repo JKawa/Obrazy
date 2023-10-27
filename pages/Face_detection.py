@@ -6,7 +6,6 @@ ch_im=choose_image()
 
 c=class_image(ch_im)
 
-shown_im=c.image
 
 st.sidebar.header("Choose process")
 
@@ -32,4 +31,4 @@ st.sidebar.markdown("---------------------------")
 
 
 
-st.image(shown_im)
+st.image(f"images/{ch_im}.jpeg", use_column_width=True)
