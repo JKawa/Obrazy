@@ -102,7 +102,6 @@ def fill_picture(base_image, new_image):
     height_b, width_b, _ = base_image.shape
     height_n, width_n, _ = new_image.shape
     image_0 = create_image(height_b, width_b)
-    print("-----------------------------",get_pixel(image_0,1,1))
     pixels_0 = image_0
     for i in range(height_n):
         for j in range(width_n):

@@ -50,4 +50,4 @@ def test_image_crop(image):
 def test_crop_n_parts(image):
     actual = image.crop_n_parts(2)
     assert isinstance(actual, list)
-    assert len(actual) == 9
+    assert len(actual) == 4

@@ -3,6 +3,7 @@ import cv2 as cv
 import numpy as np
 import requests
 import json
+from src.class_images import images_list
 
 
 st.header("Choose picture to add")
@@ -12,11 +13,6 @@ st.subheader(
 # File uploader
 image = st.file_uploader("Choose image to add", type=["jpg", "png", "jpeg"])
 image_name = st.text_input("Add name")
-
-
-def save_image(image, name, path="images"):
-    with open(f"{path}/{name}.jpeg", "wb") as f:
-        f.write(image)
 
 
 def image_bytes_from_file(image, name):
@@ -34,11 +30,14 @@ def image_from_bites(bytes):
 
 if st.button("Add picture", key="picture_upload"):
     if image is not None and image_name is not None:
-        im_bytes = image_bytes_from_file(image, image_name)
-        image = image_from_bites(im_bytes)
-        st.image(
-            image,
-        )
+        if image_name in images_list("images"):
+            st.error("Please choose unique name")
+        else:
+            im_bytes = image_bytes_from_file(image, image_name)
+            image = image_from_bites(im_bytes)
+            st.image(
+                image,
+            )
     else:
         st.error("Please upload an image and write name")
 
@@ -73,19 +72,24 @@ def get_image_from_url(url):
     if response.status_code == 200:
         image_bytes = np.frombuffer(response.content, np.uint8)
         image = cv.imdecode(image_bytes, cv.IMREAD_COLOR)
+        st.markdown(type(image))
     return image
 
 
 if st.button("Add picture", key="picture_wikipedia"):
     if ch_image != "":
-        try:
-            img_url = get_wiki_image(ch_image)
-            st.markdown(img_url)
-            st.image(img_url)
-            img = get_image_from_url(img_url)
-            save_path = f"images/{ch_image}.jpeg"
-            cv.imwrite(save_path, img)
-        except Exception:
-            st.error("Please try again")
+        if f"{ch_image}_from_wikipedia" in images_list("images"):
+            st.error("The picture is in the base")
+        else:
+            try:
+                img_url = get_wiki_image(ch_image)
+                st.markdown(img_url)
+                st.image(img_url)
+                img = get_image_from_url(img_url)
+                name = f"{ch_image}_from_wikipedia"
+                save_path = f"images/{name}.jpeg"
+                cv.imwrite(save_path, img)
+            except Exception:
+                st.error("Please try again")
     else:
         st.error("Please insert word")

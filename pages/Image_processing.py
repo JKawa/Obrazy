@@ -9,11 +9,7 @@ ch_im = choose_image()
 c = class_image(ch_im)
 
 
-def delete_files_from_dir(dir):
-    for filename in os.listdir(dir):
-        if os.path.isfile(os.path.join(f"{dir}/", filename)):
-            os.remove(os.path.join(f"{dir}/", filename))
-    return dir
+
 
 
 st.sidebar.header("Choose process")
@@ -53,7 +49,6 @@ st.sidebar.subheader("Crop")
 n = st.sidebar.number_input("Choose number of elements", min_value=0)
 crop_button = st.sidebar.button("Crop")
 if crop_button:
-    delete_files_from_dir("saved_patches")
 
     fields = c.crop_n_parts(n)
 
